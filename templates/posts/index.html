@@ -10,11 +10,11 @@
     
     {% for post in posts%}
         <p>
-            {{ post.title }}
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
             {{ post.content }}
             {{ post.timestamp }}
             {{ post.last_updated }}
-            {{ post.id }}
+            {{ post.pk }}
         </p>
     {% endfor%}
 </body>
