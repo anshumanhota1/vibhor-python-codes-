@@ -7,15 +7,11 @@
 </head>
 <body>
     <h1>It's working </h1>
-    
-    {% for post in posts%}
         <p>
             {{ post.title }}
             {{ post.content }}
             {{ post.timestamp }}
             {{ post.last_updated }}
-            {{ post.id }}
         </p>
-    {% endfor%}
 </body>
 </html>
