@@ -15,3 +15,7 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('posts:detail', kwargs={'id': self.pk})
+    """
+        the above method is better then using {% url <url path> %}
+        (vid ref 19 try django 1.9)
+    """

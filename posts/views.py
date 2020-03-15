@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from .models import Post
-
+from .forms import PostForm
 # Create your views here.
 
 def post_view(request):
@@ -10,7 +10,19 @@ def post_view(request):
 
 
 def post_create(request):
-    return HttpResponse("<h2>Create</h2>")
+    form = PostForm(request.POST or None)
+    """
+        create a instance of  PostFrom class from the forms module
+        for validtions pass the request.Post argument
+        pass 'or None' so that the validation are given when 
+        invaild data is being passed and not always(vid ref 20 try dango 1.9)
+    """
+    if form.is_valid:
+        post = form.save(commit=False)
+        post.save()
+        #create a post and save it in database
+
+    return render(request,'posts/post_form.html', {"form": form})
 
 
 def post_details(request, id):
