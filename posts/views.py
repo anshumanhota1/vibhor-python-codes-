@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post
 from .forms import PostForm
 # Create your views here.
@@ -17,10 +17,11 @@ def post_create(request):
         pass 'or None' so that the validation are given when 
         invaild data is being passed and not always(vid ref 20 try dango 1.9)
     """
-    if form.is_valid:
+    if form.is_valid and request.method == "POST":
         post = form.save(commit=False)
         post.save()
         #create a post and save it in database
+        return redirect(post.get_absolute_url())
 
     return render(request,'posts/post_form.html', {"form": form})
 
@@ -30,8 +31,19 @@ def post_details(request, id):
     return render(request,'posts/details.html', {"post": post})
 
 
-def post_update(request):
-    return HttpResponse("<h2>Update</h2>")
+def post_update(request, id):
+    post = get_object_or_404(Post, id=id)
+    form = PostForm(request.POST or None, instance=post)
+    if form.is_valid and request.method == "POST":
+        post = form.save(commit=False)
+        post.save()
+        return redirect(post.get_absolute_url())
+    context = {
+        "title": post.title,
+        "post": post,
+        "form": form
+    }
+    return render(request,'posts/post_form.html', context)
 
     
 def post_delete(request):
