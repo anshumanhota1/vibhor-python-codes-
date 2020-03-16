@@ -51,5 +51,8 @@ def post_update(request, id):
     return render(request,'posts/post_form.html', context)
 
     
-def post_delete(request):
-    return HttpResponse("<h2>Delete</h2>")
+def post_delete(request, id):
+    post = get_object_or_404(Post, id=id)
+    post.delete()
+    messages.success(request, "Post deleted successfully")
+    return redirect("posts:home")
