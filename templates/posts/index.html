@@ -1,13 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sample</title>
-</head>
-<body>
-    <h1>It's working </h1>
-    
+{% extends 'base.html' %}
+{% block content %}
     {% for post in posts%}
         <p>
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
@@ -17,5 +9,4 @@
             {{ post.pk }}
         </p>
     {% endfor%}
-</body>
-</html>
+{% endblock content %}
