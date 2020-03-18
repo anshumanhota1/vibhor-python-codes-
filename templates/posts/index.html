@@ -1,12 +1,20 @@
 {% extends 'base.html' %}
+
 {% block content %}
+
+    <h1>Blogs</h1>
     {% for post in posts%}
-        <p>
-            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-            {{ post.content }}
-            {{ post.timestamp }}
-            {{ post.last_updated }}
-            {{ post.pk }}
-        </p>
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <div class="caption">
+                <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> <small>{{ post.timestamp | timesince}}</small> ago</h3>
+                 <p>{{ post.content | linebreaks | truncatechars:120}}</p>
+                <p><a href="{{ post.get_absolute_url }}" class="btn btn-outline-info btn-lg btn-block" role="button">View</a></p>
+            </div>
+        </div>
+        <hr/>
+    </div>
     {% endfor%}
+
 {% endblock content %}
+

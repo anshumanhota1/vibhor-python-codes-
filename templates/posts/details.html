@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
+{% block head_title %}
+    {{ post.title }} |{{ block.super }}
+{% endblock %}
 {% block content %}
 
-    <h1>It's working </h1>
+    <div class="col-sm-6">
+        <h1>{{ post.title }} <small>{{ post.timestamp }}</small></h1>
         <p>
-            {{ post.title }}
-            {{ post.content }}
-            {{ post.timestamp }}
-            {{ post.last_updated }}
+            {{ post.content | linebreaks}}
         </p>
-
+    </div>
 {% endblock content %}
