@@ -1,13 +1,18 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post
 from .forms import PostForm
 # Create your views here.
 
 def post_view(request):
-    posts = Post.objects.all()
-    return render(request,'posts/index.html', {"posts": posts})
+    post_list = Post.objects.all()
+    paginator = Paginator(post_list, 2) # Show 25 posts per page
+    page_var = 'page'
+    page = request.GET.get(page_var)
+    posts = paginator.get_page(page)
+    return render(request,'posts/index.html', {"posts": posts, 'page_var': page_var})
 
 
 def post_create(request):

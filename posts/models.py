@@ -19,3 +19,5 @@ class Post(models.Model):
         the above method is better then using {% url <url path> %}
         (vid ref 19 try django 1.9)
     """
+    class Meta:
+        ordering = ['-timestamp', '-last_updated']
