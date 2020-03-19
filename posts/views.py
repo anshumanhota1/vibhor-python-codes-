@@ -1,3 +1,4 @@
+from urllib.parse import quote_plus
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -36,7 +37,8 @@ def post_create(request):
 
 def post_details(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    return render(request,'posts/details.html', {"post": post})
+    share_string = quote_plus(post.content)
+    return render(request,'posts/details.html', {"post": post, 'share_string': share_string })
 
 
 def post_update(request, slug):

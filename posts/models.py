@@ -53,4 +53,4 @@ def pre_save_reciver(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = create_slug(instance)
 
-pre_save.connect(pre_save_reciver, sender=Post)
+pre_save.connect(pre_save_reciver, sender=Post)#signal
