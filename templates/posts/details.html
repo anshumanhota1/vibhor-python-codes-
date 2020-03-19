@@ -9,12 +9,15 @@
             <img src="{{ post.image.url }}" alt="" class="img-fluid">
         {% endif %}
         <h1>{{ post.title }} <small>{{ post.timestamp }}</small></h1>
-    
+        {%if post.user.get_full_name %}
+            <h3>{{ post.user.get_full_name }}</h3>
+        {%endif%}
         {{ post.content | linebreaks}}
         <!-- 
             for doing {{ share_string }} u can also use your custom templates in django
             ref vid 31 try django 19
         -->
+
         <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
             Share on Facebook
         </a>

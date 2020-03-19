@@ -1,12 +1,14 @@
 from django.db import models
+from django.conf import settings
 from django.urls import reverse
 from django.db.models.signals import pre_save
 from django.utils.text import slugify
 # Create your models here.
 
 def upload(object, filename):
-    return f'{object.id}/{filename}'
+    return f'%s/%s'%(object.id,filename)
 class Post(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_DEFAULT, default= True)
     title = models.CharField(max_length=120)
     slug = models.SlugField(unique=True)
     height_field = models.IntegerField(default=0)

@@ -19,7 +19,7 @@ def post_view(request):
 
 
 def post_create(request):
-    if not request.is_staff or not request.is_superuser:
+    if not request.user.is_staff and not request.user.is_superuser:
         raise Http404
     form = PostForm(request.POST or None, request.FILES or None)
     """
@@ -30,6 +30,7 @@ def post_create(request):
     """
     if form.is_valid and request.method == "POST":
         post = form.save(commit=False)
+        post.user = request.user
         post.save()
         #create a post and save it in database
         messages.success(request, "Post created successfully")
@@ -45,7 +46,7 @@ def post_details(request, slug):
 
 
 def post_update(request, slug):
-    if not request.is_staff or not request.is_superuser:
+    if not request.user.is_staff and not request.user.is_superuser:
         raise Http404
     post = get_object_or_404(Post, slug=slug)
     form = PostForm(request.POST or None, request.FILES or None, instance=post)
@@ -65,7 +66,7 @@ def post_update(request, slug):
 
     
 def post_delete(request, slug):
-    if not request.is_staff or not request.is_superuser:
+    if not request.user.is_staff and not request.user.is_superuser:
         raise Http404
     post = get_object_or_404(Post, slug=slug)
     post.delete()
