@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import Post
 from .forms import PostForm
+
 # Create your views here.
 
 def post_view(request):
@@ -33,13 +34,13 @@ def post_create(request):
     return render(request,'posts/post_form.html', {"form": form})
 
 
-def post_details(request, id):
-    post = get_object_or_404(Post, id=id)
+def post_details(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     return render(request,'posts/details.html', {"post": post})
 
 
-def post_update(request, id):
-    post = get_object_or_404(Post, id=id)
+def post_update(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     form = PostForm(request.POST or None, request.FILES or None, instance=post)
     if form.is_valid and request.method == "POST":
         post = form.save(commit=False)
@@ -56,8 +57,10 @@ def post_update(request, id):
     return render(request,'posts/post_form.html', context)
 
     
-def post_delete(request, id):
-    post = get_object_or_404(Post, id=id)
+def post_delete(request, slug):
+    post = get_object_or_404(Post, slug=slug)
     post.delete()
     messages.success(request, "Post deleted successfully")
     return redirect("posts:home")
+
+
