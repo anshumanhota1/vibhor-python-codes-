@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
    <h1>Create a Blog</h1>
-    <form method="POST" action="">
+    <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" class="btn btn-outline-primary" value="Publish Post"/>

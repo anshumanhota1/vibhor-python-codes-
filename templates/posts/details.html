@@ -5,9 +5,13 @@
 {% block content %}
 
     <div class="col-sm-6">
+        {% if post.image %}
+            <img src="{{ post.image.url }}" alt="" class="img-fluid">
+        {% endif %}
         <h1>{{ post.title }} <small>{{ post.timestamp }}</small></h1>
-        <p>
+    
             {{ post.content | linebreaks}}
-        </p>
+      
+        
     </div>
 {% endblock content %}
