@@ -5,12 +5,21 @@ from django.core.paginator import Paginator
 from django.http import Http404
 from .models import Post
 from .forms import PostForm
+from django.db.models import Q
 
 # Create your views here.
 
 def post_view(request):
     
     post_list = Post.objects.all()
+    query = request.GET.get('q')
+    if query:
+        post_list = post_list.filter(
+            Q(title__icontains=query)|
+            Q(content__icontains=query)|
+            Q(user__first_name__icontains=query)|
+            Q(user__last_name__icontains=query)
+        ).distinct()
     paginator = Paginator(post_list, 2) # Show 25 posts per page
     page_var = 'page'
     page = request.GET.get(page_var)
@@ -74,3 +83,8 @@ def post_delete(request, slug):
     return redirect("posts:home")
 
 
+"""
+the future publishing of post and the drafting of the post functions have not
+been added, if you want to refer those please 
+ref vid 34, 35, & 36 from try django 1.9 
+"""
